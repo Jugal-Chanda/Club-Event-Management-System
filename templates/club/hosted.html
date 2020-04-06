@@ -1,0 +1,111 @@
+{% extends "club/base.html" %}
+{% block content %}
+<style media="screen">
+  .red {
+    background-color: red;
+    height: 50px;
+  }
+  .event_single_box {
+    border: 1px solid #95a5a6;
+    padding: 2px;
+
+  }
+  .event_date_time {
+    text-align: center;
+    border: 1px solid #95a5a6;
+
+
+  }
+
+  .event_date_time .date{
+    font-size: 22px;
+    margin: 0px;
+  }
+
+  .event_date_time .month{
+    font-size: 24px;
+    margin: 0px;
+  }
+
+  .event_date_time .year{
+    font-size: 22px;
+    margin: 0px;
+  }
+  .event_details {
+    border: 1px solid #95a5a6;
+    positon: relative;
+  }
+  .block_display {
+    display: none;
+  }
+  .more_about {
+    font-weight: bolder;
+    font-size: 18px;
+    position:absolute;
+    right: 0;
+    bottom: 0;
+    transition: 0.4s;
+
+  }
+  .more_about:hover{
+    text-decoration: none;
+    transform: scale(1.1)
+  }
+  @media (max-width: 768px) {
+    .event_details {
+      text-align: center;
+    }
+    .event_date_time {
+      display: flex;
+      justify-content: center;
+    }
+    .event_date_time {
+      font-size: 20px;
+    }
+    .date, .block_display{
+      padding-right: 5px;
+    }
+    .block_display {
+      display: block;
+    }
+
+
+  }
+
+
+</style>
+  <section class="">
+          <div class=" row pt-md-5 mt-md-3 mb-5 ml-3 ">
+
+            {% for event in events %}
+            <div class="col-xl-6 col-md-12 col-sm-12">
+              <div class="event_single_box row mr-1 mb-2">
+                <div class="event_date_time col-md-2 ">
+                  <p class="date">{{ event.startdate|date:"d" }}</p>
+                  <p class="month">{{ event.startdate|date:"M" }}</p>
+                  <p class="block_display">,</p>
+                  <p class="year">{{ event.startdate|date:"Y" }}</p>
+                </div>
+                <div class="event_details col-md-10">
+                  <h3>{{event.name}} </h3>
+                  <h5>{{event.eventlocation}}</h5>
+                  <h6>{{event.startdate|date:" D d M Y"}} - {{event.enddate|date:" D d M Y"}}</h6>
+                  <a href="{% url 'eventsingle' event.eventname %}" class="more_about">More About ...</a>
+                </div>
+
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+
+  </section>
+
+{% endblock %}
+
+{% block js_script %}
+<script type="text/javascript">
+  $("#hosted").addClass("current");
+
+</script>
+{% endblock %}

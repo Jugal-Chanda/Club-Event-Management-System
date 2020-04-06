@@ -1,0 +1,144 @@
+{% extends "club/base.html" %}
+{% load static %}
+{% block content %}
+<style media="screen">
+  .red {
+    background-color: red;
+    height: 50px;
+  }
+  .event_single_box {
+    border: 1px solid #95a5a6;
+    padding: 2px;
+
+  }
+  .event_date_time {
+    text-align: center;
+    border: 1px solid #95a5a6;
+
+
+  }
+
+  .event_date_time .date{
+    font-size: 22px;
+    margin: 0px;
+  }
+
+  .event_date_time .year{
+    font-size: 22px;
+    margin: 0px;
+  }
+  .event_details {
+    border: 1px solid #95a5a6;
+  }
+  .block_display {
+    display: none;
+  }
+  .event_name {
+    font-weight: bolder;
+    font-size: 20px;
+    transition: 0.4s;
+
+  }
+  .event_name:hover{
+    text-decoration: none;
+    transform: scale(1.1)
+  }
+  .action_btn {
+    padding: 0px;
+  }
+  .action_btn:focus{
+    box-shadow: none;
+  }
+
+  .action_icon {
+    color: black;
+  }
+
+  .checkbox_td {
+    width: 1%;
+  }
+  .border_bottom {
+    border-bottom: 2px solid black;
+  }
+  .border_bottom_p {
+    border-bottom: 1px solid black;
+  }
+  .action_td {
+    border-top:none;
+  }
+
+  @media (max-width: 768px) {
+    .event_details {
+      text-align: center;
+    }
+    .event_date_time {
+      display: flex;
+      justify-content: center;
+    }
+    .event_date_time {
+      font-size: 20px;
+    }
+    .date, .block_display{
+      padding-right: 5px;
+    }
+    .block_display {
+      display: block;
+    }
+
+
+  }
+</style>
+
+<section class="">
+  <div class="pt-md-5 mt-md-3 mb-5 ml-md-3">
+    <h3 class="mb-4 text-center">Choose a event</h3>
+    <div class="row">
+      <!-- Event Single -->
+      {% for event in events %}
+      <div class="col-xl-6 col-md-12 col-sm-12">
+        <div class="event_single_box row mr-md-1 mb-3 ml-sm-1 mr-sm-1">
+          <div class="event_date_time col-lg-2 col-md-3 col-sm">
+            <p class="date">{{ event.startdate|date:"d M" }}</p>
+            <p class="block_display">,</p>
+            <p class="year">{{ event.startdate|date:"Y" }}</p>
+          </div>
+          <div class="event_details col-lg-10 col-md-9 align-center pt-2 pb-2">
+            <div class="">
+              <a href="{{event.eventname}}/" class="event_name" >{{event.eventname}}</a>
+              <h6>{{ event.startdate|date:"d M Y" }} - {{ event.enddate|date:"d M Y" }}</h6>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+      <!-- End -->
+
+    </div>
+
+  </div>
+
+
+</section>
+
+{% endblock %}
+
+{% block js_script %}
+
+<script type="text/javascript">
+  $("#select_all").on("click", function() {
+      $("input:checkbox").prop("checked", $(this).prop("checked"));
+  });
+  $("#send_sms_selected").click(function(){
+    $('input[name="perticipants"]:checked').each(function() {
+     console.log(this.value);
+    });
+  });
+
+  $("#manageevents").addClass("current");
+
+</script>
+
+
+{% endblock %}

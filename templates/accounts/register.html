@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %} ">
+</head>
+
+<body>
+  <div class="container">
+    <div class="layer">
+      <div class="login-box">
+        <h1>Sign Up</h1>
+        <form method="post" action="">
+          {% csrf_token %}
+            <div class="textbox">
+              <i class="fas fa-envelope"></i>
+              {{ form.email }}
+            </div>
+            <div class="textbox">
+              <i class="fas fa-user"></i>
+              {{ form.username }}
+            </div>
+
+            <div class="textbox">
+              <i class="fas fa-lock"></i>
+              {{ form.password1 }}
+            </div>
+            <div class="textbox">
+              <i class="fas fa-lock"></i>
+              {{ form.password2 }}
+            </div>
+
+            <input type="submit" class="btn" value="Sign Up">
+        </form>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

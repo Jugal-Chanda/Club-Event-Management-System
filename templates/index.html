@@ -1,0 +1,211 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+      integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe"
+      crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+    <link rel="stylesheet" href="{% static 'css/user_style.css' %}">
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="top_header_bg">
+      <div class="container ">
+          <div class="row no-gutters">
+            <div class="col-lg-4 text-center text-lg-left">
+              <a class="text-color mr-3" href="callto:+443003030266" style="font-size: 22px;"><strong>CALL</strong> +44 300 303 0266</a>
+            </div>
+            <div class="col-lg-8 text-center text-lg-right">
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
+                <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="container p-0 navbar_container">
+        <nav class="navbar navbar-expand-lg p-0">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse row no-gutters" id="navbarSupportedContent">
+            <div class="col-lg-4">
+              <img src="{% static 'images/logo.png' %}" alt="" class="logo">
+            </div>
+            <div class="col-lg-8 d-flex">
+              <ul class="navbar-nav ml-auto mb-auto mr-3">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+
+    <section class="page_title_bg overlay">
+      <div class="container page_title_container">
+        <div class="row">
+          <div class="col-md-8">
+            <ul class="list-inline custom-breadcrumb">
+              <li class="list-inline-item"><a class="h2 page_title_name" href="#">Home</a></li>
+              <li class="list-inline-item text-white h3 font-secondary @@nasted"></li>
+            </ul>
+            <p class="text-lighten">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="">
+      <h3 class="text-center section_title">News and Notices</h3>
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-5 news_notice_sec_container" id="news_section">
+            <h4 class="text-center news_notice_title">News</h4>
+            <!-- Individual News Start -->
+            {% for news_single in news %}
+            <div class="row no-gutters news_notice_sec">
+              <div class="col-sm-2 d-flex align-items-center">
+                <div class="data_time_sec">
+                  <h4 class="text-center">{{news_single.created_at|date:"d"}}</h4>
+                  <h4 class="text-center">{{news_single.created_at|date:"M"}}</h4>
+                </div>
+              </div>
+              <div class="col-sm-10 news_notice_content">
+                <h4>{{news_single.newstitle|truncatewords:4}}</h4>
+                <p>{{news_single.description|truncatewords:12}}</p>
+                <a href="{% url 'newssingle' news_single.newstitle %}" class="continue_reading_btn">Continue Reading...</a>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Individual News End -->
+          </div>
+          <div class="col-md-1 middle_border_1"></div>
+          <div class="col-md-1 middle_border_2"></div>
+          <div class="col-md-5  news_notice_sec_container">
+            <h4 class="text-center news_notice_title">Notices</h4>
+
+            <!-- Individual Notice Start -->
+            {% for notice in notices %}
+            <div class="row no-gutters news_notice_sec">
+              <div class="col-sm-2 d-flex align-items-center">
+                <div class="data_time_sec">
+                  <h4 class="text-center">{{notice.created_at|date:"d"}}</h4>
+                  <h4 class="text-center">{{notice.created_at|date:"M"}}</h4>
+                </div>
+              </div>
+              <div class="col-sm-10 news_notice_content">
+                <h4>{{notice.noticetitle|truncatewords:4}}</h4>
+                <p>{{notice.description|truncatewords:12}}</p>
+                <a href="{% url 'noticeingle' notice.noticetitle %}" class="continue_reading_btn">Continue Reading...</a>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Individual Notice End -->
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="">
+      <h3 class="text-center section_title">Events</h3>
+      <div class="container">
+        <div class="row">
+          <!-- events start -->
+          {% for event in events %}
+          <div class="col-md-4 col-sm-6 hover-shadow">
+            <div class="event_img_holder">
+              <img src="{{MEDIA_URL}}/{{event.event_cover_photo.url}}" alt="" class="event_img">
+              <div class="event_date_time d-flex align-items-center justify-content-center">
+                <div class="">
+                  <h3 class="text-center">{{ event.startdate|date:"d" }}</h3>
+                  <h4 class="text-center">{{ event.startdate|date:"M" }}</h4>
+                </div>
+              </div>
+            </div>
+            <div class="mt-2">
+              <div class="row no-gutters">
+                <div class="col-sm-1">
+                  <span class="mr-3"><i class="fas fa-map-marker-alt fa-lg"></i></span>
+                </div>
+                <div class="col-sm-11">
+                  <h5>{{event.eventlocation}}</h5>
+                </div>
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-11">
+                  <a href="event/{{event.eventname}}/" class="event_name_link"><h3>{{event.eventname}}</h3></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- events ends -->
+        </div>
+
+      </div>
+      <div class="text-center mt-3">
+        <a href="#" class="see_all_event_btn">See All</a>
+
+      </div>
+
+    </section>
+
+
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+    integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+    // $.ajax({
+    //   url: '/ajax/shownews/',
+    //   data: {
+    //
+    //   },
+    //   dataType: 'json',
+    //   success: function (data) {
+    //     console.log(data)
+    //   }
+    // });
+      // $('#news_section').scroll(function(){
+      //   console.log("scrolltop " + $('#news_section').scrollTop());
+      //   console.log("height " + $('#news_section').height());
+      //   console.log("height add news" + $('#add_news').height());
+      //   if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+      //       $('#news_section').append($('#add_news').html());
+      //   }
+      // });
+    </script>
+
+  </body>
+</html>

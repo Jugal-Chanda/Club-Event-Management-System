@@ -1,0 +1,89 @@
+{% extends "club/base.html" %}
+{% block content %}
+<style media="screen">
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+</style>
+  <section>
+
+          <div class="row pt-md-5 mt-md-3 mb-5 ml-3 ">
+            {% if messages %}
+            <ul class="messages col-md-6 offset-3" >
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="col-md-6 offset-3">
+              <form class="" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="exampleFormControlFile1">Event Cover </label>
+                  <input type="file" class="form-control-file" id="exampleFormControlFile1" name="evet_cover">
+                </div>
+                <div class="form-group">
+                  <label for="event_name">Event Name</label>
+                  <input type="text" class="form-control" id="event_name" name="event_name">
+                </div>
+                <div class="form-group">
+                  <label for="event_location">Event Location</label>
+                  <input type="text" class="form-control" id="event_location" name="event_location">
+                </div>
+
+                <div class="form-group">
+                  <label for="event_description">Event Description</label>
+                  <textarea class="form-control" id="event_description" rows="5" name="event_description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="datetimepicker1">Start Date Time</label>
+                  <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="start_date_time">
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="datetimepicker2">End Date Time</label>
+                  <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="end_date_time">
+                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+
+              </form>
+            </div>
+          </div>
+
+  </section>
+
+{% endblock %}
+
+{% block js_script %}
+<script type="text/javascript">
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+    format: 'YYYY-MM-DD HH:MM',
+    icons: {
+                time: "fa fa-clock",
+            }
+    });
+    $("#datetimepicker2").datetimepicker({
+    format: 'YYYY-MM-DD HH:MM',
+    icons: {
+                time: "fa fa-clock",
+            }
+    });
+});
+
+$("#create_events").addClass("current");
+</script>
+{% endblock %}

@@ -1,0 +1,164 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+.top-header {
+  font-size: 12px;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease, -webkit-transform .2s ease;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  font-weight: 600;
+}
+.top_header_bg{
+  background: rgb(28,67,112);
+}
+
+.page_title_bg{
+  background: url('../images/ewu.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.page_title_container{
+  padding: 50px 0;
+}
+.overlay {
+  position: relative;
+}
+.logo {
+  width: 100%;
+}
+
+.overlay::before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgb(28,67,112);
+  opacity: .3;
+}
+.navbar_container {
+  background-color: rgba(255,255,255,0.8);
+}
+.text-lighten{
+  color: white;
+  font-weight: 900;
+  font-size: 20px;
+}
+.page_title_name{
+  color: white;
+  font-weight: bolder;
+  transition: all 0.5s;
+}
+.page_title_name:hover {
+  text-decoration: none;
+}
+.section_title {
+  margin: 25px 0;
+  padding: 5px;
+  background-color: rgba(28, 67, 112, 0.2);
+}
+.news_notice_sec_container {
+  border: 2px solid rgb(28,67,112);
+  border-radius: 10px;
+  height: 400px;
+  overflow-y: scroll;
+}
+.middle_border_1 {
+  border-right: 2px solid black;
+}
+.middle_border_2{
+  border-left: 2px solid black;
+}
+.news_notice_title {
+  border-bottom: 3px solid rgb(28,67,112);
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.data_time_sec {
+  margin: auto;
+  /* border-right: 2px solid rgb(28,67,112); */
+}
+.news_notice_content {
+  position: relative;
+}
+.continue_reading_btn {
+  position: absolute;
+  right: 5px;
+  bottom: 2px;
+  font-weight: bold;
+  transition: all 0.4s;
+}
+.continue_reading_btn:hover{
+  text-decoration: none;
+  transform: scale(1.1);
+}
+.news_notice_sec {
+  padding: 10px 0px;
+  border-bottom: 1px solid rgba(28,67,112,0.4);
+}
+.event_img {
+  width: 100%;
+}
+.event_img_holder {
+  position: relative;
+}
+.event_date_time{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(28,67,112,0.5);
+  height: 100px;
+  width: 100px;
+  color: white;
+  font-weight: bolder;
+}
+.hover-shadow {
+  transition: all .3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0px 4px 25px 0px rgba(27, 39, 71, 0.15);
+  transform: scale(1.1);
+}
+
+.see_all_event_btn {
+  font-weight: bolder;
+  font-size: 20px;
+  padding: 10px 15px;
+  background-color: rgba(27, 39, 71, 0.15);
+  border-radius: 10px;
+  transition: all 0.4s;
+}
+.see_all_event_btn:hover{
+  text-decoration: none;
+  font-size: 25px;
+}
+
+.apply_now_btn:focus {
+  box-shadow: none;
+}
+.event_details p{
+  font-size: 18px;
+  font-weight: 400;
+}
+.event_details h4{
+  font-weight: 900;
+}
+
+.event_name_link {
+  color: black;
+}
+
+.event_name_link:hover{
+  text-decoration: none;
+  color: rgb(27, 39, 71);
+
+}
+body{
+  padding-bottom: 50px;
+}

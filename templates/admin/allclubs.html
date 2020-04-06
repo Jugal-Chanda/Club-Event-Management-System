@@ -1,0 +1,111 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %} Clubs Club{% endblock %}
+{% block content %}
+<style media="screen">
+  .club_tbody tr {
+    transition: all .4s;
+  }
+  .tran {
+    transition: all .4s;
+  }
+
+</style>
+<div class="pt-md-5 mt-md-3 mb-5">
+  <div class="tran">
+    <ul class="text-success d-none success_msg">
+      <li class="">Hello</li>
+    </ul>
+    <ul class="text-danger d-none error_msg">
+      <li>{{check}}</li>
+    </ul>
+  </div>
+
+
+
+<div class="" id="clubs_table">
+<table class="table ml-md-3 mr-md-3 table-bordered table-hover" >
+  <thead class="thead-dark">
+    <tr class="text-center">
+      <th scope="col">#</th>
+      <th scope="col">Logo</th>
+      <th scope="col">Club Name</th>
+      <th scope="col">Short Form</th>
+      <th scope="col">Form</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody class="club_tbody">
+
+    {% for club in clubs %}
+    <tr style="{% if not club.is_active %} background-color: #D7D8D9;  {% endif %}">
+      <th scope="row" class="text-center align-middle">1</th>
+      <td class="text-center"><img  style="width : 50px; height: auto; " src="{{ MEDIA_URL }}/{{club.logo.url}}" alt="Not Found"></td>
+      <td class="align-middle">{{club.clubname}}</td>
+      <td class="align-middle" >{{club.shortname}}</td>
+      <td class="align-middle" >{{club.form}}</td>
+      <td class="text-center align-middle" >
+        <a href="{{club.clubname}}/" class="btn" ><i class="fas fa-info-circle"></i></a>
+        {% if club.is_active %}
+        <span class="btn disable_club" id="" data_id_of_club="{{club.id}}"><i class="fas fa-eye-slash text-danger"></i></span>
+        {% else %}
+        <span class="btn enable_club" id="enable_club" data_id_of_club="{{club.id}}"><i class="fas fa-eye text-info"></i></span>
+        {% endif %}
+      </td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}
+
+{% block js_script %}
+<script type="text/javascript">
+
+  $( document ).ready(function() {
+    $("#after_validation").hide();
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+  });
+
+//Disable a club
+  $(".disable_club").click(function(){
+    var clubid = $(this).attr("data_id_of_club");
+    $.ajax({
+      url: '/ajax/disable_club/',
+      data: {
+        'clubid': clubid,
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.check ) {
+          $('.success_msg li').text(data.clubname + "is Disabled");
+          $(".success_msg").removeClass("d-none");
+          $("#clubs_table").load(location + " #clubs_table")
+        }
+      }
+    });
+  });
+
+  //enable a club
+  $(".enable_club").click(function(){
+    var clubid = $(this).attr("data_id_of_club");
+    $.ajax({
+      url: '/ajax/enable_club/',
+      data: {
+        'clubid': clubid,
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.check ) {
+          $('.success_msg li').text(data.clubname + "is Enabled");
+          $(".success_msg").removeClass("d-none");
+          $("#clubs_table").load(location + " #clubs_table")
+        }
+      }
+    });
+  });
+  </script>
+{% endblock %}

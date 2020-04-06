@@ -1,0 +1,308 @@
+{% extends "club/base.html" %}
+{% load static %}
+{% block content %}
+<style media="screen">
+  .red {
+    background-color: red;
+    height: 50px;
+  }
+  .event_single_box {
+    border: 1px solid #95a5a6;
+    padding: 2px;
+
+  }
+  .event_date_time {
+    text-align: center;
+    border: 1px solid #95a5a6;
+
+
+  }
+
+  .event_date_time .date{
+    font-size: 22px;
+    margin: 0px;
+  }
+
+  .event_date_time .year{
+    font-size: 22px;
+    margin: 0px;
+  }
+  .event_details {
+    border: 1px solid #95a5a6;
+  }
+  .block_display {
+    display: none;
+  }
+  .event_name {
+    font-weight: bolder;
+    font-size: 20px;
+    transition: 0.4s;
+
+  }
+  .event_name:hover{
+    text-decoration: none;
+    transform: scale(1.1)
+  }
+  .action_btn {
+    padding: 0px;
+  }
+  .action_btn:focus{
+    box-shadow: none;
+  }
+
+  .action_icon {
+    color: black;
+  }
+
+  .checkbox_td {
+    width: 1%;
+  }
+  .border_bottom {
+    border-bottom: 2px solid black;
+  }
+  .border_bottom_p {
+    border-bottom: 1px solid black;
+  }
+  .action_td {
+    border-top:none;
+  }
+
+  @media (max-width: 768px) {
+    .event_details {
+      text-align: center;
+    }
+    .event_date_time {
+      display: flex;
+      justify-content: center;
+    }
+    .event_date_time {
+      font-size: 20px;
+    }
+    .date, .block_display{
+      padding-right: 5px;
+    }
+    .block_display {
+      display: block;
+    }
+
+
+  }
+</style>
+
+<section class="">
+
+
+        <div class="pt-md-5 mt-md-3 mb-5 ml-md-3">
+          <h4 class="text-center "><span class="border_bottom pl-3 pr-3">Event Name</span></h4>
+          <h5 class="text-center mt-3 mb-3"><span class="border_bottom_p pl-3 pr-3 ">Perticipants List</span></h5>
+          <table class="table table-hover">
+            <thead>
+            <tr scope="col">
+              <th class="checkbox_td action_td" style="border-top:none;"><input class="pl-0" type="checkbox" value="" id="select_all"></th>
+              <th colspan="5" class="action_td" style="border-top:none;">
+                <label class="" for="select_all"> Select All</label>
+                <button  class=" pl-3 btn action_btn " id="send_sms_selected" data-toggle="modal" data-target="#smsmodal">
+                  <i class="fas fa-comment-alt fa-lg action_icon"></i>
+                </button>
+                <button  class=" pl-3 btn action_btn " id="send_email_selected" data-toggle="modal" data-target="#emailmodal">
+                  <i class="fas fa-envelope fa-lg action_icon"></i>
+                </button>
+              </th>
+            </tr>
+            </thead>
+            <form class="" action="" method="post">
+              <!-- Dummy -->
+              {% for perticipant in perticipants %}
+              <tr class="" scope="row">
+                <td class=""><input type="checkbox" name="perticipants" value="{{ perticipant.id }}" data_email="{{ perticipant.email }}" ></td>
+                <td>{{ perticipant.name }}</td>
+                <td>{{ perticipant.std_id }}</td>
+                <td>{{ perticipant.email }}</td>
+                <td>{{ perticipant.phone }}</td>
+                <td>
+                  <a href="" class=" btn action_btn" >
+                    <i class="fas fa-comment-alt fa-lg action_icon"></i>
+                  </a>
+                  <a href="" class=" btn action_btn" >
+                    <i class="fas fa-comment-alt fa-lg action_icon"></i>
+                  </a>
+                </td>
+
+              </tr>
+              {% endfor %}
+              <!--End  Dummy -->
+
+            </form>
+          </table>
+        </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="emailmodal" tabindex="-1" role="dialog" aria-labelledby="emailmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="emailmodalLabel">Sent Email</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="confirmation text-success">
+          <h4></h4>
+        </div>
+        <div class="warning text-danger">
+          <h4>afda</h4>
+        </div>
+        <div class="" id="email_form">
+          <label for="select_option">Select Option</label>
+          <select class="form-control form-control-sm mt-2" id="select_option_email" name="option">
+            <option value="#" id="selectd_alltime">Select Option</option>
+            <option value="[[Perticipant Name]]">[[Perticipant Name]]</option>
+            <option value="[[Perticipant Student ID]]">[[Perticipant Student ID]]</option>
+            <option value="[[Perticipant Email]]">[[Perticipant Email]]</option>
+            <option value="[[Perticipant Phone]]">[[Perticipant Phone]]</option>
+            <option value="[[Perticipant First Name]]">[[Perticipant First Name]]</option>
+          </select>
+          <div class="form-group mt-3">
+            <label for="emaiL_sub">Email Subject Here</label>
+            <input class="form-control" type="text" name="email_subject" id="emaiL_sub">
+          </div>
+          <div class="form-group mt-3">
+            <label for="email_msg">Write Message Here</label>
+            <textarea class="form-control" id="email_msg" rows="10" name="comment"></textarea>
+          </div>
+          <button class="btn btn-primary" id="send_email">Submit</button>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="smsmodal" tabindex="-1" role="dialog" aria-labelledby="smsmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="smsmodalLabel">Sent SMS</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="confirmation text-success">
+          <h4></h4>
+        </div>
+        <div class="warning text-danger">
+          <h4>afda</h4>
+        </div>
+        <div class="" id="sms_form">
+          <label for="select_option">Select Option</label>
+          <select class="form-control form-control-sm mt-2" id="select_option" name="option">
+            <option value=""></option>
+            <option value="[[Perticipant Name]]">[[Perticipant Name]]</option>
+            <option value="[[Perticipant Student ID]]">[[Perticipant Student ID]]</option>
+            <option value="[[Perticipant Email]]">[[Perticipant Email]]</option>
+            <option value="[[Perticipant Phone]]">[[Perticipant Phone]]</option>
+            <option value="[[Perticipant First Name]]">[[Perticipant First Name]]</option>
+          </select>
+            <div class="form-group mt-3">
+              <label for="email_msg">Write Message Here</label>
+              <textarea class="form-control" id="email_msg" rows="10" name="comment"></textarea>
+            </div>
+
+          <button class="btn btn-primary" id="send_sms">Submit</button>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block js_script %}
+
+<script type="text/javascript">
+  $('.confirmation h4').hide();
+  $('.warning').hide();
+
+  $("#send_email_selected").click(function(){
+    var len = $('input[name="perticipants"]:checked').length;
+    if(len==0){
+      $("#email_form").hide();
+      $(".warning h4").text("Please select peticipants first, then try!!");
+      $(".warning").show();
+    }
+    else{
+      $("#email_form").show();
+      $(".warning").hide();
+    }
+  });
+  $("#send_sms_selected").click(function(){
+    var len = $('input[name="perticipants"]:checked').length;
+    if(len==0){
+      $("#sms_form").hide();
+      $(".warning h4").text("Please select peticipants first, then try!!");
+      $(".warning").show();
+    }
+    else{
+      $("#sms_form").hide();
+      $(".warning h4").text("This Service is not available Now. Try communicate with email...");
+      $(".warning").show();
+    }
+  });
+
+  $("#select_option_email").change(function () {
+      var selectedVal = $("#select_option_email option:selected").val();
+      var text = $("#email_msg").val();
+      $("#email_msg").val(text + selectedVal);
+      $("#select_option_email").val('#');
+  });
+
+  $("#select_all").on("click", function() {
+      $("input:checkbox").prop("checked", $(this).prop("checked"));
+  });
+
+
+  $("#send_email").click(function(){
+
+      $('input[name="perticipants"]:checked').each(function() {
+      var temp = $(this);
+      console.log(temp.attr('data_email')+" " + temp.val());
+      $.ajax({
+        beforeSend: function(){
+          $('#emailmodal').modal('hide');
+          $("#loading-overlay").show();
+        },
+        async: false,
+        url: '/ajax/sendemail/',
+        data: {
+          'id': temp.val(),
+          'email_msg': $("#email_msg").val(),
+          'email_sub': $("#emaiL_sub").val(),
+        },
+        dataType: 'json',
+        success: function (data) {
+        }
+      });
+    });
+    $("#loading-overlay").hide();
+  });
+
+  <!--  -->
+
+</script>
+
+
+{% endblock %}

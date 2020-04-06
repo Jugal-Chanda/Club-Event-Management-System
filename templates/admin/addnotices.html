@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% block title %} Admin {% endblock %}
+{% block content %}
+<!-- end of cards -->
+
+
+
+<div class="row pt-md-5 mt-md-3 mb-5 ml-3 ">
+  <div class="col-md-6 offset-3">
+    <div class="card">
+
+        <form class="form-horizontal" method="POST">
+          {% csrf_token %}
+            <div class="card-body">
+                <h4 class="card-title text-center">Fill Up Notice Information</h4>
+                <div class="text-success text-center">
+                  <h4>{{success_msg}}</h4>
+                </div>
+                {% for field in form %}
+                  <div class="form-group row">
+                      {{ field.errors }}
+                      <label for="{{ field.id_for_label }}" class="col-sm-3 text-right control-label col-form-label">{{ field.label }}</label>
+                      <div class="col-sm-9 ">{{ field }}</div>
+                      {{ field.errors }}
+                  </div>
+                {% endfor %}
+            </div>
+            <div class="border-top">
+                <div class="card-body d-flex justify-content-center">
+                    <input type="submit" class="btn btn-success px-3" value="Add">
+                </div>
+            </div>
+        </form>
+      </div>
+
+  </div>
+
+</div>
+  {% endblock %}

@@ -1,0 +1,131 @@
+
+{% extends "club/base.html" %}
+{% load static %}
+{% block content %}
+<style media="screen">
+  .red {
+    background-color: red;
+    /* height: 50px; */
+    /* padding: 0; */
+  }
+  .event_container img{
+    width: 100%;
+    height: auto;
+  }
+  .event_container {
+    padding: 0px;
+
+  }
+  P{
+    margin: 0px;
+  }
+
+  .event_heading_time p {
+    font-weight: bolder;
+    font-size: 22px;
+    text-align: center;
+  }
+  .event_name_holder{
+    positon: relative;
+  }
+  .event_name {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+  }
+
+  .ticket_link {
+    float: right;
+    transition: all 0.4s;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .hosted_by_link {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .ticket_link:hover {
+    transform: scale(1.1)
+  }
+
+  .hosted_by_link:hover{
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+
+  }
+  @media (max-width: 576px) {
+
+  }
+
+
+
+</style>
+  <section class="">
+          <div class=" row pt-md-5 mt-md-3 mb-5 ml-md-3 mr-1 ml-1">
+            <div class="col-xl-8 col-lg-12 offset-xl-2 event_container">
+              <img src="{{MEDIA_URL}}/{{event.event_cover_photo.url}}" class="" alt="Responsive image">
+              <div class="row pt-3" style="margin: 0px;">
+                <div class="event_heading_time col-lg-1 col-2">
+                  <p>{{ event.startdate|date:"d" }}</p>
+                  <p>{{ event.startdate|date:"M" }}</p>
+                </div>
+                <div class="event_name_holder col-lg-11 col-10 ">
+                  <div class="event_name">
+                    <h4 class="">{{event.eventname}}</h4>
+                    <h6>Hosted By: {{event.created_by}}</h6>
+                  </div>
+                </div>
+
+              </div>
+              <hr size="3">
+              <div class="event_details row " style="margin: 0px;">
+                <div class="col-1 "><i class="far fa-clock icon" ></i></div>
+                <div class="col-11">
+                  <span>From</span>
+                  <span>{{event.startdate|date:"D"}}</span>
+                  <span>{{event.startdate|date:"d M Y"}},</span>
+                  <span>{{event.startdate|date:"H:i"}}</span>
+                  <span>  </span>
+                  <span>To</span>
+                  <span>{{event.startdate|date:"D"}}</span>
+                  <span>{{event.startdate|date:"d M Y"}},</span>
+                  <span>{{event.startdate|date:"H:i"}}</span>
+                </div>
+
+                <div class="col-1 pt-2" style="" ><i class="fas fa-map-marker-alt"></i></div>
+                <div class="col-11 pt-2">
+                  <span>{{event.eventlocation}}</span>
+                </div>
+
+                <div class="col-1 pt-2" style="" ><i class="fas fa-map-marker-alt"></i></div>
+                <div class="col-11 pt-2 d-flex">
+                  <h6 class="">Hosted By: </h6>
+                  <h6 class="pl-2 " style=""><a href="#" class="p-0 m-0 hosted_by_link">{{event.created_by}}</a></h6>
+                </div>
+
+                <div class="col-1 pt-2" style="" ><i class="fas fa-map-marker-alt"></i></div>
+                <div class="col-11 pt-2">
+                  <span>Ticket</span>
+                  <a href="{% url 'eventsingleuser' event.eventname %}" class=" btn ticket_link d-block">Find Tickets</a>
+                </div>
+
+              </div>
+              <hr>
+              <h5 class="pl-1 mb-3 mt-3"><b>About</b></h5>
+              {{event.description|safe}}
+            </div>
+
+          </div>
+
+  </section>
+
+{% endblock %}
+
+{% block js_script %}
+
+{% endblock %}

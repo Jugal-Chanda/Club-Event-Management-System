@@ -1,0 +1,287 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %} Clubs Club{% endblock %}
+{% block content %}
+
+<style media="screen">
+  .for_add_ec {
+    position: relative;
+  }
+
+.add_ec {
+  position: absolute;
+  bottom: 100%;
+  left: 0%;
+  transition:0.5s;
+}
+.add_ec:hover {
+  transform: scale(1.5);
+  cursor:pointer;
+}
+.email_search {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #999;
+  transition: all .4s;
+}
+
+.email_search:focus {
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 2px solid #dc3545;
+}
+
+.search-button {
+  border-radius: 50%;
+  padding: 10px 16px;
+  transition: all .4s;
+}
+
+.search-button:hover {
+  background-color: #eee;
+  transform: translateY(-1px);
+}
+.search-button:focus {
+  box-shadow: none;
+}
+
+.ec-add-modal-button {
+  background: transparent;
+  border: none;
+  transition: all .4s;
+}
+.ec-add-modal-button:hover {
+  transform: translateY(-2px);
+}
+.ec-add-modal-button:focus {
+  box-shadow: none;
+}
+
+.edit_ec_btn {
+  background: transparent;
+  border: none;
+  transition: all .4s;
+}
+.edit_ec_btn:hover {
+  transform: translateY(-2px);
+}
+.edit_ec_btn:focus {
+  box-shadow: none;
+}
+
+.designation {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #999;
+  transition: all .4s;
+}
+
+.designation:focus {
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 2px solid #dc3545;
+}
+/* #after_validation {
+  transition: all 2s;
+} */
+</style>
+<div class="pt-md-5 mt-md-3 mb-5">
+  <div class="d-flex justify-content-center align-middle">
+    <img src="{{ MEDIA_URL }}/{{club.logo.url}}" alt="Image Not Found" width="50">
+    <h2 class="my-auto pl-2">{{club.clubname}}</h2>
+  </div>
+
+  <div class="mt-3">
+    <div class="d-flex justify-content-center align-middle">
+      <h2 class="my-auto border-bottom border-secondary">Club Executibes</h2>
+    </div>
+  </div>
+
+  <div class="mt-3 for_add_ec">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr class="text-center">
+          <th scope="col">#</th>
+          <th scope="col">Designation</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Form</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="club_tbody">
+
+        {% for club in details %}
+        <tr class="">
+          <th scope="row" class="text-center align-middle">{{ forloop.counter }}</th>
+          <td class="align-middle">{{club.designation}}</td>
+          <td class="align-middle">{{club.ec_id__username}}</td>
+          <td class="align-middle">{{club.ec_id__email}}</td>
+          <td class="align-middle">{{club.ec_id__phone_number}}</td>
+          <td class="align-middle">{{club.date_joined}}</td>
+          <td class="text-center align-middle" >
+            <span class="btn edit_ec_btn delete_ec" data_id_of_clubec="{{club.id}}" id=""><i class="fas fa-trash-alt text-danger"></i></span>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    <span type="button" class="add_ec" data-toggle="modal" data-target="#add_ec_modal"><i class="fas fa-plus-circle fa-2x text-info"></i></span>
+  </div>
+
+
+</div>
+<!-- Add Ec Model -->
+<div class="modal fade" id="add_ec_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form" action="" method="post">
+          {% csrf_token %}
+          <div class="d-flex">
+            <input class="form-control email_search" type="email" name="account_email" value="" id="email_for_add_ec_input"  placeholder="Search Executive's by Email Address">
+            <button type="button" class="btn btn-white search-button" id="email_for_add_ec"><i class="fas fa-search text-danger"></i></button>
+          </div>
+          <div class="mt-3 text-danger" id="error_msg">
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+          <div class="mt-3 text-success" id="success_msg">
+            <h4></h4>
+          </div>
+          <div class="mt-3" id="after_validation">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr class="text-center">
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="">
+                <tr class="">
+                  <td class="align-middle" id="ec_name">Presidant Name </td>
+                  <td class="align-middle" id="ec_email">Presidant Email</td>
+                  <td class="align-middle" id="ec_phone">Presidant Phone</td>
+                  <td class="text-center align-middle"><a href="#" class="btn ec_btn" ><i class="fas fa-edit fa-2x text-info"></i></a></td>
+                </tr>
+
+              </tbody>
+            </table>
+            <div class="d-flex">
+              <input class="form-control designation" type="text" name="ec_designation" id="ec_designation" value="" placeholder="Enter Executives Designation">
+              <button type="button" class="btn btn-white ec-add-modal-button" id="ec_form_submit_btn" data-club-name="{{club.clubname}}"><i class="fas fa-check-circle fa-2x text-primary"></i></button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ec Model end -->
+{% endblock %}
+
+{% block js_script %}
+<script type="text/javascript">
+
+  $( document ).ready(function() {
+    $("#after_validation").hide();
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+  });
+
+
+// add ec to database
+
+  $("#ec_form_submit_btn").click(function(){
+    var email = $("#email_for_add_ec_input").val();
+    var designation  = $('#ec_designation').val();
+    var clubname = $('#ec_form_submit_btn').attr("data-club-name");
+    $.ajax({
+      url: '/ajax/add_ec_data_to_database/',
+      data: {
+        'email': email,
+        'designation' : designation,
+        'clubname' : clubname
+      },
+      dataType: 'json',
+      success: function (data) {
+        if(!data.check){
+          // $("#error_msg ul li").text(data["msg"])
+          // $("#error_msg").slideDown();
+          // $("#success_msg").hide();
+          alert("hello")
+        }else{
+           $("#success_msg h4").text(data["msg"])
+           $("#error_msg").hide();
+           $("#success_msg").slideDown();
+           $('#add_ec_modal').modal('hide');
+           // $("add_ec_modal").modal('hide');
+           location.reload(true);
+          //alert("hello one")
+        }
+      }
+    });
+  });
+
+
+// Find accounts based on user email
+  $("#email_for_add_ec").click(function () {
+    var email = $("#email_for_add_ec_input").val();
+    $.ajax({
+      url: '/ajax/email_validate_for_add_ec/',
+      data: {
+        'email': email
+      },
+      dataType: 'json',
+      success: function (data) {
+        if(!data.check){
+          $("#error_msg ul li").text(data["msg"])
+          $("#error_msg").slideDown();
+          // alert("hello")
+        }else{
+          $("#ec_name").text(data.fullname);
+          $("#ec_phone").text(data.phone_number);
+          $("#ec_email").text(data.email);
+          $("#email_for_add_ec_input").val(email);
+          $("#after_validation").slideDown();
+          $("#error_msg").hide();
+
+        }
+      }
+    });
+  });
+  //Deleting an Ec
+  $(".delete_ec").click(function () {
+    $.ajax({
+      url: '/ajax/delete_ec/',
+      data: {
+        'id': $(this).attr("data_id_of_clubec")
+      },
+      dataType: 'json',
+      success: function (data) {
+        location.reload(true);
+      }
+    });
+  });
+
+</script>
+
+{% endblock %}

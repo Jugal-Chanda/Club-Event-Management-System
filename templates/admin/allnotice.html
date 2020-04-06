@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block title %} Admin {% endblock %}
+{% block content %}
+<!-- end of cards -->
+
+
+
+<div class="row pt-md-5 mt-md-3 mb-5 ml-3 mr-3">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Publication Date</th>
+        <th class="text-center">Notices</th>
+        <th></th>
+      </tr>
+      {% for notice in notices %}
+      <tr scope="row">
+        <td>{{notice.created_at}}</td>
+        <td>
+          <h4>{{notice.noticetitle}}</h4>
+          <p>{{notice.description|truncatewords:40}}</p>
+        </td>
+        <td><a href="{% url 'deletenotice' notice.id %}"><i class="fas fa-trash text-danger fa-2x"></i></a></td>
+      </tr>
+      {% endfor %}
+    </thead>
+
+  </table>
+</div>
+  {% endblock %}
