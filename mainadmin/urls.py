@@ -9,4 +9,5 @@ urlpatterns = [
     path('registerclub/', views.registerclub, name='registerclub'),
     path('clubs/', views.allclubs, name='allclubs'),
     path('clubs/<str:clubname>/', views.clubsingle, name='clubsingle'),
+    path('uploadcalendar/', views.uploadcalendar, name='uploadcalendar'),
 ]

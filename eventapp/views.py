@@ -2,15 +2,15 @@ from django.shortcuts import render
 from club.models import Clubs,Club_Ec
 from eventapp.models import Events,Perticipants_details
 from django.contrib import messages
+from accounts import auth_fun
 
 # Create your views here.
 #------------------- helper function --------------------
 
 def ec_is_autenticate(request):
     temp = {}
-    if request.user.is_authenticated:
+    if auth_fun.club_per(request.user):
         temp['auth'] = True
-
         club_ec = Club_Ec.objects.get(ec=request.user)
         club = Clubs.objects.get(pk=club_ec.club_id)
         temp['club'] = club
@@ -31,12 +31,12 @@ def create_event_db(request):
     club = Clubs.objects.get(pk=club_ec.club_id)
     print(event_cover_photo)
     event =  Events(event_cover_photo=event_cover_photo,eventname=eventname,eventlocation=eventlocation,description=description,startdate=startdate,enddate=enddate,created_by = club)
-    event.save()
     try:
-
+        event.save()
         temp['check'] = True
         temp['event'] = event
-    except:
+    except Exception as e:
+        # print(e, e.__class__)
         temp['check'] = False
     return temp
 
@@ -53,16 +53,14 @@ def createevent(request):
         if request.POST:
             temp = create_event_db(request)
             if temp['check']:
-                messages.add_message(request, messages.SUCCESS, 'Hello world.')
-                print("Helllo World")
+                messages.add_message(request, messages.SUCCESS, 'Event Successfully Created')
             else:
-                messages.add_message(request, messages.ERROR, 'Something Error Please Submit Again')
+                messages.add_message(request, messages.ERROR, 'Something Error Please Try Again. Possile Duplicate entry')
 
         return render(request, 'club/createevents.html',context)
     else:
         return redirect('login')
-    # print(temp)
-    # return render(request, 'club/createevents.html',context)
+
 
 def hosted_events(request):
     context = {}

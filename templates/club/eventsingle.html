@@ -46,7 +46,13 @@
     font-weight: bold;
     font-size: 18px;
   }
-
+  .event_edit_icon {
+    transition: all 0.4s;
+  }
+  .event_edit_icon:hover {
+    cursor: pointer;
+    font-size: 18px;
+  }
   .ticket_link:hover {
     transform: scale(1.1)
   }
@@ -68,6 +74,7 @@
   <section class="">
           <div class=" row pt-md-5 mt-md-3 mb-5 ml-md-3 mr-1 ml-1">
             <div class="col-xl-8 col-lg-12 offset-xl-2 event_container">
+              <div class="ml-auto text-right"><span href="#" class="event_edit_icon" data-toggle="modal" data-target="#edit_event_modal"><i class="fas fa-edit fa-2x"></i></span></div>
               <img src="{{MEDIA_URL}}/{{event.event_cover_photo.url}}" class="" alt="Responsive image">
               <div class="row pt-3" style="margin: 0px;">
                 <div class="event_heading_time col-lg-1 col-2">
@@ -124,8 +131,122 @@
 
   </section>
 
+  <!-- Modal -->
+<div class="modal fade" id="edit_event_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{event.eventname}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="success text-success"></div>
+        <div class="error text-danger"></div>
+        <form>
+          <div class="form-group">
+            <label for="event_name">Event Name</label>
+            <input type="text" class="form-control" id="event_name" name="event_name" value="{{event.eventname}}">
+          </div>
+          <div class="form-group">
+            <label for="event_location">Event Location</label>
+            <input type="text" class="form-control" id="event_location" name="event_location" value="{{event.eventlocation}}">
+          </div>
+
+          <div class="form-group">
+            <label for="event_description_edit">Event Description</label>
+            <textarea class="form-control" id="event_description_edit" rows="5" name="event_description">{{event.description}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="datetimepicker1">Start Date Time</label>
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+              <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="start_date_time" value="{{event.startdate}}">
+              <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="datetimepicker2">End Date Time</label>
+            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+              <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="end_date_time" value="{{event.enddate}}">
+              <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal_close">Close</button>
+        <button type="button" class="btn btn-primary" id="save_changes_btn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block js_script %}
+<script type="text/javascript">
+
+  $('#save_changes_btn').click(function(){
+    event_name = $('input[name="event_name"]').val();
+    event_location = $('input[name="event_location"]').val();
+    event_description = $('#event_description_edit').val();
+    start_date_time = $('input[name="start_date_time"]').val();
+    end_date_time = $('input[name="end_date_time"]').val();
+
+    $.ajax({
+      beforeSend: function(){
+        $("#loading-overlay").show();
+      },
+      url: '/ajax/edit_event/',
+      data: {
+        'id' : {{event.id}},
+        'event_name': event_name,
+        'event_location': event_location,
+        'event_description': event_description,
+        'start_date_time': start_date_time,
+        'end_date_time': end_date_time,
+      },
+      dataType: 'json',
+      success: function (data) {
+        $("#loading-overlay").hide();
+        if(data.ok){
+          $('.success').text("Event Updated")
+        }
+        else{
+          $('.error').text("Something Went Wrong. If you change event name possible duplicate entry")
+        }
+      }
+    });
+
+  });
+
+  $('#modal_close').click(function () {
+    location.reload(true);
+  });
+
+</script>
+
+<script type="text/javascript">
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+    format: 'YYYY-MM-DD HH:MM',
+    icons: {
+                time: "fa fa-clock",
+            }
+    });
+    $("#datetimepicker2").datetimepicker({
+    format: 'YYYY-MM-DD HH:MM',
+    icons: {
+                time: "fa fa-clock",
+            }
+    });
+});
+</script>
 
 {% endblock %}

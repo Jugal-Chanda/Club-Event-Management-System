@@ -5,16 +5,12 @@ from accounts.models import Accounts
 class Clubs(models.Model):
     clubname = models.CharField(blank=False, max_length = 255,unique=True)
     shortname = models.CharField(blank=False, max_length = 10)
-    clubemail = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        blank=True
-    )
+    clubemail = models.EmailField(max_length=255,blank=True)
+    password = models.CharField(max_length=255,blank=True)
     logo = models.ImageField(upload_to="club_logo/")
     form = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     ec = models.ManyToManyField(Accounts, through='club_ec')
-
 
 
     def __str__(self):

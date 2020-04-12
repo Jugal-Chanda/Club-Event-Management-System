@@ -70,8 +70,19 @@
                     class="fas fa-users text-light fa-lg mr-3"></i>Create Club</a></li>
               <li class="nav-item"><a href="{% url 'allclubs' %}" class="nav-link text-white p-3 mb-2 sidebar-link"><i
                     class="fas fa-users text-light fa-lg mr-3"></i>Clubs</a></li>
-              <li class="nav-item"><a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"><i
-                    class="fas fa-calendar-alt text-light fa-lg mr-3"></i>Calender</a></li>
+              <li class="nav-item dropdown">
+                <a href="#collapseExample" class="nav-link text-white p-3 mb-2 sidebar-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" id="manageevents">
+                  <i class="fas fa-calendar text-light fa-lg mr-3"></i>Academic Calendar
+                </a>
+                <div class="collapse" id="collapseExample">
+                  <ul>
+                    <li class="nav-item"><a href="{% url 'uploadcalendar' %}" class="nav-link text-white p-3 mb-2 sidebar-link" ><i
+                          class="fas fa-calendar text-light fa-lg mr-3"></i>Upload</a></li>
+                  </ul>
+
+
+                </div>
+              </li>
             </ul>
           </div>
           <!-- end of sidebar -->

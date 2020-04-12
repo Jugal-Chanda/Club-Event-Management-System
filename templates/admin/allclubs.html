@@ -40,7 +40,7 @@
 
     {% for club in clubs %}
     <tr style="{% if not club.is_active %} background-color: #D7D8D9;  {% endif %}">
-      <th scope="row" class="text-center align-middle">1</th>
+      <th scope="row" class="text-center align-middle">{{ forloop.counter }}</th>
       <td class="text-center"><img  style="width : 50px; height: auto; " src="{{ MEDIA_URL }}/{{club.logo.url}}" alt="Not Found"></td>
       <td class="align-middle">{{club.clubname}}</td>
       <td class="align-middle" >{{club.shortname}}</td>

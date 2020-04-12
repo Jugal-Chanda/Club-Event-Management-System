@@ -1,22 +1,127 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from eventapp.models import Events
 from newAndNotices.models import News,Notices
+from accounts.models import Accounts
+from accounts.forms import RegistrationForm
+from mainadmin.models import Academic_calendar
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 # Create your views here.noticesingle.html
-def home(request):
+
+def calender(request):
     context = {}
-    events = Events.objects.all().order_by('-startdate');
-    news = News.objects.all().order_by('-created_at');
-    notices = Notices.objects.all().order_by('-created_at');
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
     context['news'] = news
     context['notices'] = notices
+    calendars = Academic_calendar.objects.all().order_by('-uploaded_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['calendars'] = calendars
+    return render(request, 'academic.html',context)
+
+@xframe_options_sameorigin
+def calender_label(request,label_name):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['caledar'] = Academic_calendar.objects.get(calendar_label=label_name)
+    return render(request, 'calendar_single.html',context)
+
+def home(request):
+    context = {}
+    events = Events.objects.all().order_by('-startdate')
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+
     if(len(events)>3):
         events = events[:3]
     context['events'] = events
     return render(request, 'index.html',context)
+
+def event_all(request):
+    context = {}
+    context['events'] = Events.objects.all().order_by('-startdate')
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    return render(request, 'events.html',context)
+
+def profile(request):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    if request.user.is_authenticated:
+        context['user'] = request.user
+        return render(request, 'profile.html',context)
+    else:
+        return redirect('login')
 def event_single(request,eventname):
     context = {}
     context['event'] = Events.objects.get(eventname=eventname)
-    events = Events.objects.all().order_by('-startdate');
+    events = Events.objects.all().order_by('-startdate')
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
     if(len(events)>3):
         events = events[:3]
     context['events'] = events
@@ -26,9 +131,36 @@ def event_single(request,eventname):
 def newssingle(request,newsname):
     context = {}
     context['news'] = News.objects.get(newstitle=newsname)
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['all_news'] = news
     return render(request, 'newssingle.html',context)
 
 def noticeingle(request,noticename):
     context = {}
     context['notice'] = Notices.objects.get(noticetitle=noticename)
+
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notices_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['all_notice'] = notices
     return render(request, 'noticesingle.html',context)

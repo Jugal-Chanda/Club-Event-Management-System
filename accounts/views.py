@@ -1,7 +1,11 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,authenticate,logout
 from accounts.forms import RegistrationForm,Log_in_Form
+from club.models import Club_Ec,Clubs
 from accounts.models import Accounts
+from django.contrib import messages
+from accounts import auth_fun
+
 
 
 #Create your views here.
@@ -13,20 +17,18 @@ def is_authenticate(request):
 
 def redirect_permisions(user):
     if user.is_ec:
-        return 'clubHome'
+        club_ec = Club_Ec.objects.get(ec=user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        if club.is_active:
+            return 'clubHome'
+        else:
+            return 'home'
     elif user.is_admin:
         return 'adminHome'
     else:
         return 'home'
 
 #helper functions end
-
-
-def profile(request):
-    # if is_authenticate(request):
-    return render(request, 'accounts/profile.html')
-    # else:
-    # return redirect('login')
 
 def registraion_view(request):
     context={}
@@ -42,13 +44,11 @@ def registraion_view(request):
         context['form'] = form
     return render(request, 'accounts/register.html',context)
 
+
 def login_view(request):
     context={}
-    #print("request to login")
-    #user = request.user
-
-    if is_authenticate(request):
-            return redirect(redirect_permisions(request.user))
+    if auth_fun.is_authenticate(request.user):
+            return redirect(auth_fun.redirect_permision(request.user))
     if request.POST:
         form = Log_in_Form(request.POST)
         if form.is_valid():
@@ -59,7 +59,8 @@ def login_view(request):
                 login(request,user)
                 return redirect(redirect_permisions(user))
             else:
-                print("invalid login")
+                messages.add_message(request, messages.ERROR, 'Invalid Login Try Again')
+
     else:
         form = Log_in_Form()
     context['form'] = form

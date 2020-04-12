@@ -12,6 +12,10 @@ urlpatterns = [
     path('register_perticipant/',views.register_perticipant,name="register_perticipant"),
     path('check_perticipate_data/',views.check_perticipate_data,name="check_perticipate_data"),
     path('sendemail/',views.sendemail,name="sendemail"),
+    path('update_profile/',views.update_profile,name="update_profile"),
+    path('change_password/',views.change_password,name="change_password"),
+    path('edit_event/',views.edit_event,name="edit_event"),
+
     # path('shownews/',views.shownews,name="shownews"),
 
 ]

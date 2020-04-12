@@ -20,12 +20,16 @@
       <div class="container ">
           <div class="row no-gutters">
             <div class="col-lg-4 text-center text-lg-left">
-              <a class="text-color mr-3" href="callto:+443003030266" style="font-size: 22px;"><strong>CALL</strong> +44 300 303 0266</a>
+              <a class="text-color mr-3" href="callto: 09666775577" style="font-size: 22px;"><strong>CALL</strong> 09666775577</a>
             </div>
             <div class="col-lg-8 text-center text-lg-right">
               <ul class="list-inline mb-0">
-                <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#loginModal">login</a></li>
-                <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#" data-toggle="modal" data-target="#signupModal">register</a></li>
+                {% if user.is_authenticated %}
+                <li class="list-inline-item"><a class="text-uppercase text-light p-sm-2 py-2 px-0 d-inline-block" href="{% url 'logout' %}">logout</a></li>
+                {% else %}
+                <li class="list-inline-item"><a class="text-uppercase text-light p-sm-2 py-2 px-0 d-inline-block" href="{% url 'login' %}">login</a></li>
+                <li class="list-inline-item"><a class="text-uppercase text-light p-sm-2 py-2 px-0 d-inline-block" href="{% url 'registraion' %}">register</a></li>
+                {% endif %}
               </ul>
             </div>
           </div>
@@ -45,13 +49,22 @@
             <div class="col-lg-8 d-flex">
               <ul class="navbar-nav ml-auto mb-auto mr-3">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                  <a class="nav-link" href="{% url 'event_all' %}">Events</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                  <a class="nav-link" href="{% url 'newssingle' news_first.newstitle %}">News</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'noticeingle' notice_first.noticetitle %}">Notices</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'calendar' %}">Academic Calendar</a>
                 </li>
               </ul>
             </div>

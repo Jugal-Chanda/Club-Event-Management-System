@@ -34,7 +34,7 @@ EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'amibest50@gmail.com'
 # EMAIL_HOST_PASSWORD = 'jugal105488jugal'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 
 # Application definition
@@ -65,6 +65,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 ROOT_URLCONF = 'event.urls'
 
 TEMPLATES = [
@@ -83,6 +85,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 AUTH_USER_MODEL = 'accounts.Accounts'
 
 WSGI_APPLICATION = 'event.wsgi.application'

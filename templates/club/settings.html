@@ -1,0 +1,45 @@
+{% extends "club/base.html" %}
+{% block content %}
+<style media="screen">
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+</style>
+  <section>
+
+          <div class="row pt-md-5 mt-md-3 mb-5 ml-3 ">
+            {% if messages %}
+            <ul class="messages col-md-6 offset-3" >
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="col-md-6 offset-3">
+              <form class="" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="email">Enter Club Email</label>
+                  <input type="email" class="form-control" id="email" name="email">
+                  <small>Email Is sent from this email</small>
+                </div>
+                <div class="form-group">
+                  <label for="password">Email Password</label>
+                  <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+
+              </form>
+            </div>
+          </div>
+
+  </section>
+
+{% endblock %}
+
+{% block js_script %}
+
+{% endblock %}

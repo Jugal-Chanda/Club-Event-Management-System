@@ -90,9 +90,8 @@
 </style>
 
 <section class="">
-
-
         <div class="pt-md-5 mt-md-3 mb-5 ml-md-3">
+
           <h4 class="text-center "><span class="border_bottom pl-3 pr-3">Event Name</span></h4>
           <h5 class="text-center mt-3 mb-3"><span class="border_bottom_p pl-3 pr-3 ">Perticipants List</span></h5>
           <table class="table table-hover">
@@ -119,15 +118,6 @@
                 <td>{{ perticipant.std_id }}</td>
                 <td>{{ perticipant.email }}</td>
                 <td>{{ perticipant.phone }}</td>
-                <td>
-                  <a href="" class=" btn action_btn" >
-                    <i class="fas fa-comment-alt fa-lg action_icon"></i>
-                  </a>
-                  <a href="" class=" btn action_btn" >
-                    <i class="fas fa-comment-alt fa-lg action_icon"></i>
-                  </a>
-                </td>
-
               </tr>
               {% endfor %}
               <!--End  Dummy -->
@@ -172,7 +162,7 @@
             <label for="email_msg">Write Message Here</label>
             <textarea class="form-control" id="email_msg" rows="10" name="comment"></textarea>
           </div>
-          <button class="btn btn-primary" id="send_email">Submit</button>
+          <button class="btn btn-primary" id="send_email">Send Email</button>
         </div>
 
 
@@ -236,6 +226,8 @@
 <script type="text/javascript">
   $('.confirmation h4').hide();
   $('.warning').hide();
+  var email = '{{club.clubemail}}';
+  var password = '{{club.password}}'
 
   $("#send_email_selected").click(function(){
     var len = $('input[name="perticipants"]:checked').length;
@@ -244,10 +236,16 @@
       $(".warning h4").text("Please select peticipants first, then try!!");
       $(".warning").show();
     }
+    else if (email==''|| password==''){
+      $("#email_form").hide();
+      $(".warning h4").text("May Be your Email or Password not set for sending email.Go to settings and update your club Email and password for sending email!!");
+      $(".warning").show();
+    }
     else{
       $("#email_form").show();
       $(".warning").hide();
     }
+
   });
   $("#send_sms_selected").click(function(){
     var len = $('input[name="perticipants"]:checked').length;

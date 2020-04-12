@@ -1,0 +1,36 @@
+{% extends "admin/admin.html" %}
+
+{% block title %} register Club{% endblock %}
+{% block content %}
+
+
+<div class="row pt-md-5 mt-md-3 mb-5 ml-3 ">
+  <div class="col-md-6 offset-3">
+    <div class="card">
+        <form class="form-horizontal" enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+            <div class="card-body">
+                <h4 class="card-title">Upload Academic Calendar</h4>
+                {% for field in form %}
+                  <div class="form-group row">
+                      {{ field.errors }}
+                      <label for="{{ field.id_for_label }}" class="col-sm-3 text-right control-label col-form-label">{{ field.label }}</label>
+                      <div class="col-sm-9 ">{{ field}}</div>
+                      {{ field.errors }}
+                  </div>
+                {% endfor %}
+            </div>
+            <div class="border-top">
+                <div class="card-body">
+                    <input type="submit" class="btn btn-primary" value="Upload">
+                </div>
+            </div>
+        </form>
+      </div>
+
+  </div>
+
+</div>
+
+
+{% endblock %}
