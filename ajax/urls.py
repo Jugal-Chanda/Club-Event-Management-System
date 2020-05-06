@@ -15,6 +15,8 @@ urlpatterns = [
     path('update_profile/',views.update_profile,name="update_profile"),
     path('change_password/',views.change_password,name="change_password"),
     path('edit_event/',views.edit_event,name="edit_event"),
+    path('approve_member_request/',views.approve_member_request,name="approve_member_request"),
+    path('remove_member_request/',views.remove_member_request,name="remove_member_request"),
 
     # path('shownews/',views.shownews,name="shownews"),
 

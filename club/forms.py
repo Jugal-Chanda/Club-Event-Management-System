@@ -1,5 +1,5 @@
 from django import forms
-from club.models import Clubs
+from club.models import Clubs,member
 
 class registerClub(forms.ModelForm):
     """docstring for ."""
@@ -14,22 +14,17 @@ class registerClub(forms.ModelForm):
         model = Clubs
         fields = ('clubname','shortname','logo')
 
-# class add_ec(forms.ModelForm):
-#     """docstring for ."""
-#     OPTIONS = []
-#     accounts = Accounts.objects.all()
-#     for account in accounts:
-#         temp = []
-#         if not account.is_admin:
-#             temp.append(account.email)
-#             temp.append(account.username)
-#             OPTIONS.append(tuple(temp))
-#     OPTIONS = tuple(OPTIONS)
-#
-#     # ec = forms.ModelChoiceField(queryset=YourModel.objects.all()),empty_label="Choose a countries",)
-#     #ec = forms.MultipleChoiceField(widget=forms.SelectMultiple,choices=OPTIONS)
-#     ec = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=OPTIONS)
-#     class Meta:
-#         """docstring for ."""
-#         model = Club_Ec
-#         fields = ('designation',)
+class member_request_form(forms.ModelForm):
+    """docstring for ."""
+    name = forms.CharField(label="Full Name",widget= forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter Your Full Name'}))
+    email = forms.EmailField(label="Email Address",help_text="We'll never share your email with anyone else.", widget= forms.EmailInput(attrs={'class': 'form-control','aria-describedby':'emailHelp','placeholder':'Enter email'}))
+    std_id = forms.CharField(label="Student ID",widget= forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter Your Student Id'}))
+    phone_number = forms.CharField(label="Phone Number",widget= forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter Your Phone Number'}))
+    semister = forms.IntegerField(label="Number Of Semister",max_value=21,min_value=0,widget= forms.NumberInput(attrs={'class': 'form-control','placeholder':'Enter your semister'}))
+    completed_credit = forms.IntegerField(label="Completed Credit",min_value=0,widget= forms.NumberInput(attrs={'class': 'form-control','placeholder':'Enter your completed credit'}))
+
+
+    class Meta:
+        """docstring for ."""
+        model = member
+        fields = ('name','std_id','email','phone_number','semister','completed_credit')

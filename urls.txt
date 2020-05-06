@@ -1,0 +1,54 @@
+Accounts:
+  registraion
+  login
+  logout
+
+Ajax:
+  add_ec_email_validate
+  add_ec_data_to_database
+  disable_club
+  enable_club
+  delete_ec
+  register_perticipant
+  check_perticipate_data
+  sendemail
+  update_profile
+  change_password
+  edit_event
+
+Club:
+  clubHome
+  settings
+Eventapp:
+  createevent
+  hostedevent
+  eventsingle
+  perticipants
+  perticipants_details
+
+Mainadmin:
+  adminHome
+  registerclub
+  allclubs
+  clubsingle
+  uploadcalendar
+
+
+NewsAndNOtices
+  addnews
+  addnotices
+  allnews
+  deletenews
+  allnotice
+  deletenotice
+
+User:
+  home
+  event_all
+  eventsingleuser
+  newssingle
+  noticeingle
+  user_profile
+  calendar
+  calender_label
+  all_clubs_user

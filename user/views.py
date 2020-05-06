@@ -4,8 +4,83 @@ from newAndNotices.models import News,Notices
 from accounts.models import Accounts
 from accounts.forms import RegistrationForm
 from mainadmin.models import Academic_calendar
+from club.models import Clubs
+from club.forms import member_request_form
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 # Create your views here.noticesingle.html
+
+def all_clubs_user(request):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    context['clubs'] = Clubs.objects.all()
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    return render(request, 'clubs.html',context)
+
+def member_req(request,clubname):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    club = Clubs.objects.get(clubname=clubname)
+    context['club'] = club
+    if request.POST:
+        form = member_request_form(request.POST)
+        if form.is_valid():
+            member_req = form.save(commit=False)
+            member_req.club = club
+            member_req.save()
+            context['form'] = member_request_form()
+        else:
+            context['form'] = form
+    else:
+        form = member_request_form()
+        context['form'] = form
+    return render(request, 'become_a_member_form.html',context)
+
+
+def club_single_user(request,clubname):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['club'] = Clubs.objects.get(clubname=clubname)
+    return render(request, 'club_single.html',context)
+
+
 
 def calender(request):
     context = {}
@@ -21,7 +96,7 @@ def calender(request):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     context['calendars'] = calendars
@@ -41,7 +116,7 @@ def calender_label(request,label_name):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     context['caledar'] = Academic_calendar.objects.get(calendar_label=label_name)
@@ -82,7 +157,7 @@ def event_all(request):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     return render(request, 'events.html',context)
@@ -98,7 +173,7 @@ def profile(request):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     if request.user.is_authenticated:
@@ -119,7 +194,7 @@ def event_single(request,eventname):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     if(len(events)>3):
@@ -140,7 +215,7 @@ def newssingle(request,newsname):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     context['all_news'] = news
@@ -159,7 +234,7 @@ def noticeingle(request,noticename):
     try:
         notice_first= notices[0]
     except:
-        notices_first = False
+        notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
     context['all_notice'] = notices

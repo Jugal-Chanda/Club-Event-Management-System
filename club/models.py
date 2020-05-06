@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import Accounts
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Clubs(models.Model):
@@ -8,6 +9,7 @@ class Clubs(models.Model):
     clubemail = models.EmailField(max_length=255,blank=True)
     password = models.CharField(max_length=255,blank=True)
     logo = models.ImageField(upload_to="club_logo/")
+    description = models.TextField(blank=False)
     form = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     ec = models.ManyToManyField(Accounts, through='club_ec')
@@ -21,3 +23,13 @@ class Club_Ec(models.Model):
     club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
     date_joined = models.DateField(auto_now_add=True)
     designation = models.CharField(max_length=64)
+
+class member(models.Model):
+    name = models.CharField(blank=False, max_length = 255)
+    std_id = models.CharField(blank=False, max_length = 13)
+    email = models.EmailField(max_length=255,blank=True)
+    phone_number = models.CharField(max_length = 15)
+    semister = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(21)])
+    completed_credit = models.IntegerField(validators=[MinValueValidator(0)])
+    club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)

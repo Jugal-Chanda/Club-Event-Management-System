@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from accounts.models import Accounts
-from club.models import Clubs,Club_Ec
+from club.models import Clubs,Club_Ec,member
 from eventapp.models import Events,Perticipants_details
 from newAndNotices.models import News,Notices
 from django.http import JsonResponse
@@ -14,6 +14,29 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from accounts import auth_fun
 # Create your views here.
+
+def approve_member_request(request):
+    data = {}
+
+    if request.GET:
+        clubid = request.GET.get('clubid')
+        memid = int(request.GET.get('memid'))
+        mem = member.objects.all().filter(pk=memid)[0]
+        mem.approved = True
+        mem.save()
+        data['check'] = True
+    return JsonResponse(data)
+
+def remove_member_request(request):
+    data = {}
+    if request.GET:
+        clubid = request.GET.get('clubid')
+        memid = int(request.GET.get('memid'))
+        mem = member.objects.all().filter(pk=memid)[0]
+        mem.delete()
+        data['check'] = True
+    return JsonResponse(data)
+
 def edit_event(request):
     data = {}
     template = Template("club/eventsingle.html")

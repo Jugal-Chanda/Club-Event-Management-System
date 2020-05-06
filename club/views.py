@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from club.models import Club_Ec,Clubs
+from club.models import Club_Ec,Clubs,member
 from eventapp.models import Events,Perticipants_details
 from django.contrib import messages
 from accounts import auth_fun
@@ -18,7 +18,29 @@ def redirect_permisions(user):
         return 'home'
 
 #helper functions end
+def members(request):
+    context={}
+    if auth_fun.club_per(request.user):
+        club_ec = Club_Ec.objects.get(ec=request.user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        members = member.objects.all().filter(club=club,approved=True)
+        context['club'] = club
+        context['members'] = members
+        return render(request, 'club/allmember.html',context)
+    else:
+        return redirect('login')
+def requests(request):
+    context={}
+    if auth_fun.club_per(request.user):
+        club_ec = Club_Ec.objects.get(ec=request.user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        mem_requests = member.objects.all().filter(club=club,approved=False)
+        context['club'] = club
+        context['members'] = mem_requests
 
+        return render(request, 'club/requests.html',context)
+    else:
+        return redirect('login')
 
 def clubHome(request):
     context={}
@@ -39,6 +61,38 @@ def clubHome(request):
     else:
         return redirect('login')
 
+
+def update_email(request):
+    context = {}
+    if auth_fun.club_per(request.user):
+        club_ec = Club_Ec.objects.get(ec=request.user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        context['club'] = club
+        if request.POST:
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            club.clubemail = email
+            club.password = password
+            club.save()
+            messages.add_message(request, messages.SUCCESS, 'Email Updated')
+        return render(request, 'club/settings.html',context)
+    else:
+        return redirect('login')
+
+def update_description(request):
+    context = {}
+    if auth_fun.club_per(request.user):
+        club_ec = Club_Ec.objects.get(ec=request.user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        context['club'] = club
+        if request.POST:
+            description = request.POST.get('description')
+            club.description = description
+            club.save()
+            messages.add_message(request, messages.SUCCESS, 'Club Description Updated')
+        return render(request, 'club/settings.html',context)
+    else:
+        return redirect('login')
 
 def settings(request):
     context = {}

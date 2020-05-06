@@ -55,10 +55,13 @@
                   <a class="nav-link" href="{% url 'event_all' %}">Events</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'newssingle' news_first.newstitle %}">News</a>
+                  <a class="nav-link" href="{% if newssingle %}{% url 'newssingle' news_first.newstitle %} {% else %} # {% endif %}">News</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'noticeingle' notice_first.noticetitle %}">Notices</a>
+                  <a class="nav-link" href="{% if newssingle %}{% url 'newssingle' news_first.newstitle %} {% else %} # {% endif %}">Notices</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'all_clubs_user' %}">Clubs</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>

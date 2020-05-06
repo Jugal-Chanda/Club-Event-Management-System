@@ -18,6 +18,8 @@
 
   <title>{{club.shortname}}</title>
   <style media="screen">
+
+
   #loading-overlay {
   position: absolute;
   width: 100%;
@@ -60,10 +62,14 @@
             <ul class="navbar-nav flex-column mt-4">
               <li class="nav-item "><a href="{% url 'clubHome' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="dashbord"><i
                     class="fas fa-home text-light fa-lg mr-3"></i>Dashboard</a></li>
-              <li class="nav-item"><a href="{% url 'createevent' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="create_events"><i
-                    class="fas fa-calendar-plus text-light fa-lg mr-3"></i>Create Events</a></li>
+              <li class="nav-item"><a href="{% url 'createevent' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="create_events"><i class="fas fa-calendar-plus text-light fa-lg mr-3"></i>Create Events</a></li>
               <li class="nav-item"><a href="{% url 'hostedevent' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="hosted"><i
                     class="fas fa-calendar-check text-light fa-lg mr-3" disabled></i>Hosted</a></li>
+              <li class="nav-item"><a href="{% url 'mem_requests' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="request"><i
+                    class="fas fa-users text-light fa-lg mr-3"></i>Member Request</a></li>
+              <li class="nav-item"><a href="{% url 'members' %}" class="nav-link text-white p-3 mb-2 sidebar-link" id="members"><i
+                    class="fas fa-users text-light fa-lg mr-3"></i>Members</a></li>
+
               <li class="nav-item dropdown">
                 <a href="#collapseExample" class="nav-link text-white p-3 mb-2 sidebar-link" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" id="manageevents">
                   <i class="fas fa-tasks text-light fa-lg mr-3"></i>Manage Events
