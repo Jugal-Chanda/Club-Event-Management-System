@@ -1,0 +1,50 @@
+{% extends "club/base.html" %}
+{% block content %}
+<style media="screen">
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+</style>
+  <section>
+
+          <div class="row pt-md-5 mt-md-3 mb-5 ml-3 ">
+            {% if messages %}
+            <ul class="messages col-md-6 offset-3 text-center" style="list-style:none;" >
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="col-md-6 offset-3">
+              <h3>Upload Gallery Image</h3>
+
+              <form class="" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                  <div class="form-group">
+                      {{ field.errors }}
+                      <label for="{{ field.id_for_label }}" class="">{{ field.label }}</label>
+                      {{ field }}
+                      {{ field.errors }}
+                  </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-success">Submit</button>
+
+              </form>
+            </div>
+
+
+
+          </div>
+
+  </section>
+
+{% endblock %}
+
+{% block js_script %}
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from club.models import Clubs,member
+from club.models import Clubs,member,Gallery
 
 class registerClub(forms.ModelForm):
     """docstring for ."""
@@ -13,6 +13,17 @@ class registerClub(forms.ModelForm):
         """docstring for ."""
         model = Clubs
         fields = ('clubname','shortname','logo')
+
+class update_gallery(forms.ModelForm):
+    """docstring for ."""
+    image = forms.ImageField(label="Gallery Image",widget = forms.FileInput(attrs={'class':'form-control','placeholder':"Gallery Image"}))
+    # shortname = forms.TextInput(attrs={'class':'form-control','placeholder':"Club Name Here"})
+    # shortname = forms.FileInput(attrs={'class':'form-control','placeholder':"Club Name Here"})
+
+    class Meta:
+        """docstring for ."""
+        model = Gallery
+        fields = ('image',)
 
 class member_request_form(forms.ModelForm):
     """docstring for ."""

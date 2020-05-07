@@ -14,5 +14,6 @@ urlpatterns = [
     path('clubsingle/<str:clubname>/',views.club_single_user ,name="club_single_user"),
     path('ec/<str:clubname>/',views.club_ec_user ,name="club_ec_user"),
     path('member/<str:clubname>/',views.member_req ,name="member_req"),
+    path('gallery/<str:clubname>/',views.gallery ,name="gallery"),
 
 ]

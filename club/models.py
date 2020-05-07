@@ -24,6 +24,12 @@ class Club_Ec(models.Model):
     date_joined = models.DateField(auto_now_add=True)
     designation = models.CharField(max_length=64)
 
+class Gallery(models.Model):
+    club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="gallery/")
+    upload_date = models.DateField(auto_now_add=True)
+
+
 class member(models.Model):
     name = models.CharField(blank=False, max_length = 255)
     std_id = models.CharField(blank=False, max_length = 13)

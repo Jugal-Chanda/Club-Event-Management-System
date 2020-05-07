@@ -10,6 +10,7 @@ urlpatterns = [
     path('requests/', views.requests, name='mem_requests'),
     path('members/', views.members, name='members'),
     path('update_email/', views.update_email, name='update_email'),
+    path('gallery/', views.gallery, name='update_gallery'),
     path('update_description/', views.update_description, name='update_description'),
     #path('clubs/', views.clubs, name='allclubs'),
 

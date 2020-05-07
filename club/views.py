@@ -3,6 +3,7 @@ from club.models import Club_Ec,Clubs,member
 from eventapp.models import Events,Perticipants_details
 from django.contrib import messages
 from accounts import auth_fun
+from club.forms import update_gallery
 # Create your views here.
 
 # helper funtions start
@@ -18,6 +19,30 @@ def redirect_permisions(user):
         return 'home'
 
 #helper functions end
+def gallery(request):
+    context={}
+    if auth_fun.club_per(request.user):
+        club_ec = Club_Ec.objects.get(ec=request.user)
+        club = Clubs.objects.get(pk=club_ec.club_id)
+        context['club'] = club
+        if request.POST:
+            form = update_gallery(request.POST, request.FILES)
+            if form.is_valid():
+                gal = form.save(commit=False)
+                gal.club = club
+                gal.save()
+                form = update_gallery()
+                context['form'] = form
+                messages.add_message(request, messages.SUCCESS, 'Image Uploaded. It can show in user view')
+            else:
+                context['form'] = form
+        else:
+            form = update_gallery()
+            context['form'] = form
+
+        return render(request, 'club/gallery.html',context)
+    else:
+        return redirect('login')
 def members(request):
     context={}
     if auth_fun.club_per(request.user):

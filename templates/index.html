@@ -108,8 +108,8 @@
                 </div>
               </div>
               <div class="col-sm-10 news_notice_content">
-                <h4>{{news_single.newstitle|truncatewords:4}}</h4>
-                <p>{{news_single.description|truncatewords:12}}</p>
+                <h4>{{news_single.newstitle|truncatechars:20}}</h4>
+                <p>{{news_single.description|truncatechars:60}}</p>
                 <a href="{% url 'newssingle' news_single.newstitle %}" class="continue_reading_btn">Continue Reading...</a>
               </div>
             </div>
@@ -131,8 +131,8 @@
                 </div>
               </div>
               <div class="col-sm-10 news_notice_content">
-                <h4>{{notice.noticetitle|truncatewords:4}}</h4>
-                <p>{{notice.description|truncatewords:12}}</p>
+                <h4>{{notice.noticetitle|truncatechars:20}}</h4>
+                <p>{{notice.description|truncatechars:60}}</p>
                 <a href="{% url 'noticeingle' notice.noticetitle %}" class="continue_reading_btn">Continue Reading...</a>
               </div>
             </div>

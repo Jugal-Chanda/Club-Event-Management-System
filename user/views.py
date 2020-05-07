@@ -4,11 +4,32 @@ from newAndNotices.models import News,Notices
 from accounts.models import Accounts
 from accounts.forms import RegistrationForm
 from mainadmin.models import Academic_calendar
-from club.models import Clubs,Club_Ec
+from club.models import Clubs,Club_Ec,Gallery
 from club.forms import member_request_form
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 # Create your views here.noticesingle.html
 
+
+def gallery(request,clubname):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    club = Clubs.objects.get(clubname=clubname)
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['club'] = club
+    context['images'] = Gallery.objects.all().filter(club=club).order_by('-upload_date')
+    return render(request, 'gallery.html',context)
 
 def club_ec_user(request,clubname):
     context = {}

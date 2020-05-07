@@ -122,7 +122,7 @@ def sendemail(request):
     data = {}
     if request.GET:
         if request.user.is_authenticated:
-            if user.is_ec:
+            if request.user.is_ec:
                 club_ec = Club_Ec.objects.get(ec=request.user)
                 club = Clubs.objects.get(pk=club_ec.club_id)
                 id = request.GET.get('id')
