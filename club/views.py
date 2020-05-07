@@ -50,7 +50,7 @@ def clubHome(request):
         hosted_num = Events.objects.filter(created_by = club).count()
         num_clubs = Clubs.objects.all().count()
         num_member = Perticipants_details.objects.filter(club = club).count()
-        tot_member = Perticipants_details.objects.all().count()
+        tot_member = member.objects.all().filter(club = club).count()
 
         context['club'] = club
         context['num_hosted_event'] = hosted_num

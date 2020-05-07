@@ -22,6 +22,12 @@
         background: transparent;
         color: rgba(28,67,112,0.8);
       }
+      .event_link {
+        border-bottom: 2px red;
+      }
+      .event_link:hover{
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
@@ -101,20 +107,30 @@
       </div>
     </section>
 
-    <section class="">
+    <section class="mt-3">
       <div class="container">
+        <div class="row no-gutters justify-content-end">
+          <a href="{% url 'member_req' club.clubname %}" class="btn btn-info mx-2">Become a member</a>
+          <a href="{% url 'club_single_user' club.clubname  %}" class="btn btn-light mx-2">Club Home</a>
+          <a href="{% url 'club_ec_user' club.clubname %}" class="btn btn-light mx-2">Executive Commitee</a>
+
+
+
+        </div>
         <div class="row no-gutters">
           <div class="col-md-8 pr-3 ">
             <h3 class="section_title">WELCOME TO </br> {{club.clubname}}</h3>
             <p class="text-justify">{{club.description}}</p>
             <a href="{% url 'member_req' club.clubname %}" class="btn btn-primary">Become a member</a>
           </div>
-          <div class="col-md-4 pl-3 ">
+          <div class="col-md-4 pl-3">
 
             <h3 class="section_title">RECENT EVENTS</h3>
-            <div class="border-bottom mx-3">
-              Event Name
+            {% for event in events %}
+            <div class="mx-3">
+              <a href="{% url 'eventsingleuser' event.eventname %} " class="border-bottom bg-light mb-2 p-2 text-primary text-center d-block event_link" style="font-weight: 900;">{{ event.eventname }}</a>
             </div>
+            {% endfor %}
           </div>
 
         </div>

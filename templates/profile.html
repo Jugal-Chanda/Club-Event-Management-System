@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="{% static 'css/user_style.css' %}">
     <title>Home</title>
     <style media="screen">
+    img{
+
+    }
     </style>
   </head>
   <body>
@@ -101,6 +104,14 @@
             <div class="ml-auto text-right"><span href="#" class="profile_edit_icon" ><i class="fas fa-edit fa-2x"></i></span></div>
             <div class="mt-4" id="profile_details">
               <table class="table">
+                <tr>
+                  <td colspan="2" style="width: 100%;">
+                    <div class="row justify-content-center">
+                      <img src="{{MEDIA_URL}}/{{user.image.url}}" alt="" style="width:12rem; height: 12rem; border-radius: 100%;">
+
+                    </div>
+                  </td>
+                </tr>
                 <tr>
                   <td style="width: 10%;">Name</td>
                   <td style="width: 90%;">{{user.fullname}}</td>

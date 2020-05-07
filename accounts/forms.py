@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 
 class RegistrationForm(UserCreationForm):
     """docstring for ."""
+    image = forms.ImageField(label="Upload Your Image",widget = forms.FileInput(attrs={'class':'form-control','placeholder':"Your Image"}))
     fullname = forms.CharField(label="Full Name",widget= forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter Your Full Name'}))
     email = forms.EmailField(label="Email Address",help_text="We'll never share your email with anyone else.", widget= forms.EmailInput(attrs={'class': 'form-control','aria-describedby':'emailHelp','placeholder':'Enter email'}))
     username = forms.CharField(label="Username",widget= forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter Username'}))
@@ -16,7 +17,7 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         """docstring for ."""
         model = Accounts
-        fields = ('fullname','email','username','phone_number','password1','password2')
+        fields = ('image','fullname','email','username','phone_number','password1','password2')
 
 
 class Log_in_Form(forms.Form):

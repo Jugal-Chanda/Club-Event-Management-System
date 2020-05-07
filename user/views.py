@@ -4,10 +4,33 @@ from newAndNotices.models import News,Notices
 from accounts.models import Accounts
 from accounts.forms import RegistrationForm
 from mainadmin.models import Academic_calendar
-from club.models import Clubs
+from club.models import Clubs,Club_Ec
 from club.forms import member_request_form
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 # Create your views here.noticesingle.html
+
+
+def club_ec_user(request,clubname):
+    context = {}
+    news = News.objects.all().order_by('-created_at')
+    notices = Notices.objects.all().order_by('-created_at')
+    context['news'] = news
+    context['notices'] = notices
+    try:
+        news_first = news[0]
+    except:
+        news_first = False
+    try:
+        notice_first= notices[0]
+    except:
+        notice_first = False
+    club = Clubs.objects.get(clubname=clubname)
+    accounts = Club_Ec.objects.all().filter(club=club)
+    context['news_first']  = news_first
+    context['notice_first']  = notice_first
+    context['club'] = club
+    context['accounts'] = accounts
+    return render(request, 'club_ec.html',context)
 
 def all_clubs_user(request):
     context = {}
@@ -77,7 +100,10 @@ def club_single_user(request,clubname):
         notice_first = False
     context['news_first']  = news_first
     context['notice_first']  = notice_first
-    context['club'] = Clubs.objects.get(clubname=clubname)
+    club = Clubs.objects.get(clubname=clubname)
+    context['club'] = club
+    events = Events.objects.all().filter(created_by=club).order_by('-startdate')
+    context['events'] = events
     return render(request, 'club_single.html',context)
 
 

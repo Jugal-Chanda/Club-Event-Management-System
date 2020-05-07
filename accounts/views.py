@@ -33,7 +33,7 @@ def redirect_permisions(user):
 def registraion_view(request):
     context={}
     if request.POST:
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('login')

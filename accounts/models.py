@@ -48,6 +48,7 @@ class Accounts(AbstractBaseUser):
         unique=True,
     )
     username = models.CharField(max_length = 20)
+    image = models.ImageField(upload_to="accounts/")
     phone_number = models.CharField(max_length = 15)
     fullname = models.CharField(max_length = 50)
     is_active = models.BooleanField(default=True)

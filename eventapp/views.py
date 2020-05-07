@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from club.models import Clubs,Club_Ec
 from eventapp.models import Events,Perticipants_details
 from django.contrib import messages

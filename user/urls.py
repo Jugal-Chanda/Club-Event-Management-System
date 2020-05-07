@@ -11,7 +11,8 @@ urlpatterns = [
     path('calendar/',views.calender,name="calendar"),
     path('calendar/<str:label_name>',views.calender_label,name="calender_label"),
     path('clubs/',views.all_clubs_user ,name="all_clubs_user"),
-    path('clubs/<str:clubname>/',views.club_single_user ,name="club_single_user"),
+    path('clubsingle/<str:clubname>/',views.club_single_user ,name="club_single_user"),
+    path('ec/<str:clubname>/',views.club_ec_user ,name="club_ec_user"),
     path('member/<str:clubname>/',views.member_req ,name="member_req"),
 
 ]
