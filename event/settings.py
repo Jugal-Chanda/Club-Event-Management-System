@@ -28,9 +28,9 @@ SECRET_KEY = 'e6!d6*&d&x9uw^p^dwg!th_84o2_($73pyhi9qq1xpsj0-^)(x'
 DEBUG = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.mailtrap.io' #'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_PORT = 2525 #587
 # EMAIL_HOST_USER = 'amibest50@gmail.com'
 # EMAIL_HOST_PASSWORD = 'jugal105488jugal'
 

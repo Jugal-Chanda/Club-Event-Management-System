@@ -143,7 +143,7 @@ def sendemail(request):
                 email_msg = email_msg.replace("[[Perticipant First Name]]",(perticipant.name.split())[0])
                 # End Message Formatting
 
-                send_mail( email_sub, email_msg, email_from, recipient_list,fail_silently=False, auth_user=email_from, auth_password=email_pass)
+                send_mail( email_sub, email_msg, email_from, recipient_list,fail_silently=False, auth_user='dc9cfa69b22768', auth_password='b40b2aac7695c3')
         return JsonResponse(data)
 #
 # def shownews(request):
