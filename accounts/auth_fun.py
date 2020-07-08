@@ -8,7 +8,7 @@ def redirect_permision(user):
     if user.is_admin:
         return 'adminHome'
     elif user.is_ec:
-        club_ec = Club_Ec.objects.get(ec=request.user)
+        club_ec = Club_Ec.objects.get(ec=user)
         club = Clubs.objects.get(pk=club_ec.club_id)
         if club.is_active:
             return 'clubHome'
